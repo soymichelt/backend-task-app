@@ -33,28 +33,4 @@ Otro aspecto muy importante, es que la organización del proyecto no solo depend
 
 Al final la estructura ha quedado de la siguiente forma:
 
-├── src
-│   ├── di
-│   │   ├── modules
-│   │   │   ├── users.ts
-│   │   │   └── tasks.ts
-│   │   ├── shared
-│   │       └── index.ts
-│   │
-│   ├── modules
-│   │   ├── users
-│   │   │   ├── application
-│   │   │   ├── domain
-│   │   │   ├── infrastructure
-│   │   │
-│   │   ├── tasks
-│   │   │   ├── application
-│   │   │   ├── domain
-│   │   │   ├── infrastructure
-│   │
-│   ├── shared
-│   │   ├── domain
-│   │   └── infrastructure
-│
-├── package.json
-└── tsconfig.json
+![imagen](https://github.com/user-attachments/assets/1dda90df-d3e1-4cf2-af90-f124bc2fdb1e)
