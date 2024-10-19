@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "commonjs",
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "outDir": "./lib",
+    "paths": {
+      "@main": ["src/index.ts"],
+      "@di/*": ["src/di/*"],
+      "@modules/*": ["src/modules/*"],
+      "@shared/*": ["src/shared/*"]
+    },
+    "plugins": [
+      { "transform": "typescript-transform-paths" }
+    ],
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "es2017",
+    "types": ["jest", "node", "reflect-metadata"]
+  },
+  "compileOnSave": true,
+  "include": [
+    "src/**/*.ts",
+    ".eslintrc.js",
+    ".firebaserc",
+    ".prettierrc",
+    "firebase.json",
+    "jest.config.ts",
+    "jest.setup.ts",
+  ]
+}
