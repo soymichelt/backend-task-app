@@ -5,11 +5,7 @@ Este proyecto de GitHub contiene el Backend de un proyecto de una aplicación de
 
 Cada tarea cuenta con una descripción y puede ser asignada a diferentes estados, como "Por Hacer", "En Proceso", "Testeando", "Congelada" y "Completada", facilitando el seguimiento del progreso de cada una. La interfaz es intuitiva, lo que permite a los usuarios gestionar sus tareas de manera rápida y sin complicaciones, optimizando su tiempo y productividad.
 
-## Descripción Técnica
-
-Este proyecto ha sido desarrollado implementando varios aspectos del de desarrollo de software DDD (Domain Driven Design). Cada uno de los elementos, patrones de diseño y arquitecturas implementadas serán descritos acá de una forma breve; además, de las herramientas que se implementaron.
-
-### Domain Driven Design
+## Domain Driven Design
 
 Domain Driven Design (DDD) es un enfoque de desarrollo de software que se centra en modelar soluciones alineadas con las reglas, procesos y comportamientos del dominio de negocio que el software busca resolver. Esta técnica se basa en principios como la creación de domain entities, value objects, agregados, repositorios, servicios de dominio, eventos, etc, todos enfocados en estructurar el sistema para que sea comprensible y adaptable a medida que el negocio evoluciona. Es especialmente útil en sistemas complejos, ya que ayuda a gestionar la complejidad y a mantener el software alineado con el dominio.
 
@@ -34,3 +30,42 @@ Otro aspecto muy importante, es que la organización del proyecto no solo depend
 Al final la estructura ha quedado de la siguiente forma:
 
 ![imagen](https://github.com/user-attachments/assets/1dda90df-d3e1-4cf2-af90-f124bc2fdb1e)
+
+Se puede ver en la imagen anterior que en la raíz del proyecto, se encuentran 3 carpetas: `di`, `modules`, `shared`. Esto es algo que añade mucho sentido al proyecto, ya que define un patrón o flujo que se debe seguir para el desarrollo de cada feature o bug.
+
+
+2. **Inyección de Dependencias**
+
+El principal objetivo de la inyección de dependencias es desacoplar el código, lo que permite que las clases sean más flexibles, fáciles de probar y de mantener. En este proyecto se utiliza hay dos paquetes principales para poder implementar este patrón: **tsyringe** y **reflect-metadata**. Tsyringe es la herramienta que utilizamos para crear el contenedor de inyección de dependencias, mientras que reflect-metadata es para que podamos utilizar los decoradores `injectable` e `inject`.
+
+Tsyringe es un paquete que permite implementar el patrón de inyección de dependencias, pero es requerido utilizar tokens y decoradores. Los tokens se utilizan al momento de registrar una clase y al momento de inyectarla. Cuando la inyectamos utilizando el decorador `inject` debemos especificar la clase a inyectar mediante el token. Los decoradores por su parte son una característica experimental de TypeScript y por ello necesitamos el polyfill `reflect-metadata`. El decorador `injectable` permite marcar una clase para su inyección (de igual forma es necesario registrarla en el contenedor).
+
+En base a la arquitectura y patrones implementados en este proyecto, los elementos que se deben marcar como inyectables son los siguientes: repositorios, servicios de dominio, loggers, event bus, casos de uso y controladores.
+
+3. Repositorios y Servicios de Dominio
+
+Uno de los lineamientos más importantes en los que se basa este proyecto es en la implementación de los principios SOLID. Y uno de los principios más representativos es el principio de inversión de dependencias, cuyo objetivo es que las clases dependan de abstracciones y no de implementaciones, lo cuál tiene una serie de ventajas como las que se listan a continuación:
+
+* El principal objetivo de la inversión de dependencias es desacoplar el código, lo que permite que las clases sean más flexibles, fáciles de probar y de mantener.
+
+* Al no depender de implementaciones específicas, es posible cambiar el comportamiento de las clases con solo cambiar la implementación que se inyecta y esto sin la necesidad de cambiar el código de la clase que ha recibido la abstracción. Esto quiere decir que podemos crear casos de uso, que tengan implementaciones para distintas bases de datos sin que los casos de uso tengan que cambiar ninguna parte de su código.
+
+* Ya que podemos mantener distintas implementaciones, esto es útil para el testing. Podemos fácilmente crear mocks, bases de datos para testing o hacer un fake de cualquier servicio de infraestructura.
+
+Este principio es fundamental en el uso de la arquitectura hexagonal. Este nos permite poder definir los repositorios y los servicios de dominio como interfaces en los que describimos únicamente las operaciones que se pueden realizar con dichos compoentes. Estas interfaces son las abstracciones que inyectaremos en nuestros casos de uso. De esta forma el caso de uso se centrará en el qué debe hacer y no en el cómo. El resultado será nuestra lógica de negocio con bajo acoplamiento. Así podremos testear la lógica de negocio con mucha facilidad. Una vez hecho esto, podremos centrarnos en las decisiones de infraestructura, podremos crear las implementaciones específicas utilizando la herramienta que más convenga para los intereses del proyecto. Es decir, que podremos implementar la base de datos o sistema de almacenamiento que querramos y podremos cambiarla cuando querramos sin necesidad de afectar a la lógica del negocio.
+
+## Buenas prácticas
+
+A parte de la arquitectura de software, los patrones de diseño y los lineamientos de DDD, se han configurado una serie de buenas prácticas en el proyecto, dentro de las que se listan las siguientes:
+
+* El proyecto cuenta con una serie de configuración de ESLint, con diferentes reglas que se deben seguir que ayudarán a mantener un código prolijo.
+
+* También, hay una configuración de prettier para poder aplicar las reglas de manera automática utilizando la extensión de VS Code.
+
+* Se ha configurado jest y se ha añadido testing a los diferentes elementos que contienen lógica de negocio.
+
+* Para facilitar el enrutamiento de la aplicación se ha añadido una aplicación de Express a Firebase Cloud Functions. En dicha aplicación se ha configurado `helmet`, `cors` y `rate limiting` con el objetivo de mejorar la seguridad de las Cloud Functions.
+
+## CI / CD
+
+Se ha configurado un pipeline para CI / CD con GitHub Actions el cual se dispara cuando se añaden cambios a la rama `main`. Este ejecuta un flujo en el cuál corre el linter para verificar que se respeten las reglas de ESLint, luego se ejecutan los tests y sí todo va bien, se hace un build del proyecto y se hace un deploy de las funciones a Firebase.
