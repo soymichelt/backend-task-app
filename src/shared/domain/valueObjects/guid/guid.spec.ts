@@ -34,4 +34,13 @@ describe('Guid value object tests', () => {
 
     expect(result).toBeFalsy();
   });
+
+  test('Should return Guid as field name', () => {
+    const guid = Guid.build('bf316b79-13d8-4484-8bda-c08a88b7fa89');
+
+    // @ts-ignore: Protected method
+    const fieldName = guid.name();
+
+    expect(fieldName).toEqual('Guid');
+  });
 });

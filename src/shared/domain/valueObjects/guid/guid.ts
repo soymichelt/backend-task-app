@@ -5,11 +5,9 @@ export class Guid {
   readonly value: string;
 
   protected constructor(value: string) {
-    if (!validate(value)) {
-      throw new GuidInvalidException(value);
-    }
-
     this.value = value;
+
+    this.validate(value);
   }
 
   public static build(value: string): Guid {
@@ -29,5 +27,15 @@ export class Guid {
 
   public toString(): string {
     return this.value.toString();
+  }
+
+  protected validate(value: string): void {
+    if (!validate(value)) {
+      throw new GuidInvalidException(this.name(), value);
+    }
+  }
+
+  protected name(): string {
+    return this.constructor.name;
   }
 }
