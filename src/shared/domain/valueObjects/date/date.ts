@@ -1,10 +1,13 @@
+import { ArgRequiredException } from '@shared/domain/exceptions/argRequiredException';
 import { InvalidDateException } from '@shared/domain/exceptions/invalidDateException';
 
 export class DateValueObject {
   readonly value: Date;
 
-  private constructor(value: Date) {
+  protected constructor(value: Date) {
     this.value = value;
+
+    this.validate(value);
   }
 
   public static build(value: Date): DateValueObject {
@@ -44,5 +47,11 @@ export class DateValueObject {
 
   public toString(): string {
     return this.value.toISOString();
+  }
+
+  protected validate(value: Date): void {
+    if (!value) {
+      throw new ArgRequiredException('date');
+    }
   }
 }

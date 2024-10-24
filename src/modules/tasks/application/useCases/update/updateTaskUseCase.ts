@@ -8,6 +8,8 @@ import { TaskTitle } from '@modules/tasks/domain/valueObjects/taskTitle/taskTitl
 import { TaskDescription } from '@modules/tasks/domain/valueObjects/taskDescription/taskDescription';
 import { TaskStatus, TaskStatusEnum } from '@modules/tasks/domain/valueObjects/taskStatus/taskStatus';
 import { TaskNotFoundException } from '@modules/tasks/domain/exceptions/taskNotFoundException';
+import { TaskDeadline } from '@modules/tasks/domain/valueObjects/taskDeadline/taskDeadline';
+import { TaskLevel } from '@modules/tasks/domain/valueObjects/taskLevel/taskLevel';
 
 @injectable()
 export class UpdateTaskUseCase extends BaseUseCase<UpdateTaskRequest, TaskResponse> {
@@ -26,7 +28,9 @@ export class UpdateTaskUseCase extends BaseUseCase<UpdateTaskRequest, TaskRespon
     taskSelected.update({
       title: TaskTitle.build(request.title),
       description: TaskDescription.build(request.description),
+      deadline: TaskDeadline.fromString(request.deadline),
       status: TaskStatus.build(request.status as TaskStatusEnum),
+      level: TaskLevel.fromString(request.level),
     });
 
     await this.repository.save(taskSelected);

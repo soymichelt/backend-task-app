@@ -3,5 +3,7 @@ export type UpdateTaskRequest = {
 
   title: string;
   description: string;
+  deadline: string;
   status: string;
+  level: string;
 };

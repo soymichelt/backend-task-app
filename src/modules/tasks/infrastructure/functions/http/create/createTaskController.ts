@@ -20,7 +20,9 @@ export class CreateTaskController extends BaseController<CreateTaskControllerReq
     const result = await this.useCase.run({
       title: request.title,
       description: request.description,
+      deadline: request.deadline,
       status: request.status,
+      level: request.level,
       userId: request.user?.userId,
     });
 

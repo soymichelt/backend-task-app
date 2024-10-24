@@ -9,6 +9,8 @@ import { TaskTitle } from '@modules/tasks/domain/valueObjects/taskTitle/taskTitl
 import { TaskDescription } from '@modules/tasks/domain/valueObjects/taskDescription/taskDescription';
 import { TaskStatus, TaskStatusEnum } from '@modules/tasks/domain/valueObjects/taskStatus/taskStatus';
 import { UserId } from '@modules/users/domain/valueObjects/userId/userId';
+import { TaskDeadline } from '@modules/tasks/domain/valueObjects/taskDeadline/taskDeadline';
+import { TaskLevel } from '@modules/tasks/domain/valueObjects/taskLevel/taskLevel';
 
 @injectable()
 export class CreateTaskUseCase extends BaseUseCase<CreateTaskRequest, TaskResponse> {
@@ -21,7 +23,9 @@ export class CreateTaskUseCase extends BaseUseCase<CreateTaskRequest, TaskRespon
       taskId: TaskId.newId(),
       title: TaskTitle.build(request.title),
       description: TaskDescription.build(request.description),
+      deadline: TaskDeadline.fromString(request.deadline),
       status: TaskStatus.build(request.status as TaskStatusEnum),
+      level: TaskLevel.fromString(request.level),
       userId: UserId.build(request.userId),
     });
 
