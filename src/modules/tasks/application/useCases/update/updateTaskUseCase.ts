@@ -10,6 +10,7 @@ import { TaskStatus, TaskStatusEnum } from '@modules/tasks/domain/valueObjects/t
 import { TaskNotFoundException } from '@modules/tasks/domain/exceptions/taskNotFoundException';
 import { TaskDeadline } from '@modules/tasks/domain/valueObjects/taskDeadline/taskDeadline';
 import { TaskLevel } from '@modules/tasks/domain/valueObjects/taskLevel/taskLevel';
+import { UserId } from '@modules/users/domain/valueObjects/userId/userId';
 
 @injectable()
 export class UpdateTaskUseCase extends BaseUseCase<UpdateTaskRequest, TaskResponse> {
@@ -19,8 +20,9 @@ export class UpdateTaskUseCase extends BaseUseCase<UpdateTaskRequest, TaskRespon
 
   public async run(request: UpdateTaskRequest): Promise<TaskResponse> {
     const taskId = TaskId.build(request.taskId);
+    const userId = UserId.build(request.userId);
 
-    const taskSelected = await this.repository.find(taskId);
+    const taskSelected = await this.repository.find(taskId, userId);
     if (!taskSelected) {
       throw new TaskNotFoundException(taskId.value);
     }

@@ -6,4 +6,6 @@ export type UpdateTaskRequest = {
   deadline: string;
   status: string;
   level: string;
+
+  userId: string;
 };
