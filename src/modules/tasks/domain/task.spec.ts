@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import { Task, TaskPrimitives, TaskProps } from '@modules/tasks/domain/task';
 import { TaskId } from '@modules/tasks/domain/valueObjects/taskId/taskId';
 import { TaskTitle } from '@modules/tasks/domain/valueObjects/taskTitle/taskTitle';

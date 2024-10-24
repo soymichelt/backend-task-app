@@ -15,7 +15,6 @@ export class UserId extends Guid {
   }
 
   protected override name(): string {
-    console.log(this.constructor.name);
     return this.constructor.name;
   }
 }

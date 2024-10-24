@@ -10,6 +10,7 @@ import { createUserRouter } from '@modules/users/infrastructure/functions/http/c
 
 import { createTaskRouter } from '@modules/tasks/infrastructure/functions/http/create/handler';
 import { updateTaskRouter } from '@modules/tasks/infrastructure/functions/http/update/handler';
+import { updateStatusTaskRouter } from '@modules/tasks/infrastructure/functions/http/updateStatus/handler';
 import { deleteTaskRouter } from '@modules/tasks/infrastructure/functions/http/delete/handler';
 import { findAllTasksRouter } from '@modules/tasks/infrastructure/functions/http/findAll/handler';
 
@@ -43,6 +44,7 @@ app.use(createUserRouter);
 
 app.use(createTaskRouter);
 app.use(updateTaskRouter);
+app.use(updateStatusTaskRouter);
 app.use(deleteTaskRouter);
 app.use(findAllTasksRouter);
 
