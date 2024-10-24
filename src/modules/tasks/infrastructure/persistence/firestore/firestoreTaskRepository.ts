@@ -23,8 +23,9 @@ export class FirestoreTaskRepository extends FirestoreRepository<Task> implement
     await this.delete(task);
   }
 
-  public async find(taskId: TaskId): Promise<Task | undefined> {
+  public async find(taskId: TaskId, userId: UserId): Promise<Task | undefined> {
     const task = await this.get(taskId.value);
+    if (!task || !task.userId.equals(userId)) return;
 
     return task;
   }

@@ -5,6 +5,6 @@ import { UserId } from '@modules/users/domain/valueObjects/userId/userId';
 export interface TaskRepository {
   save(task: Task): Promise<void>;
   remove(task: Task): Promise<void>;
-  find(taskId: TaskId): Promise<Task | undefined>;
+  find(taskId: TaskId, userId: UserId): Promise<Task | undefined>;
   findAll(userId: UserId): Promise<Task[]>;
 }

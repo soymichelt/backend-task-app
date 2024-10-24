@@ -93,12 +93,22 @@ export class Task extends AggregateRoot {
     return this._status;
   }
 
+  public get userId(): UserId {
+    return this._userId;
+  }
+
   public update(props: Omit<TaskProps, 'taskId' | 'userId'>): void {
     this._title = props.title;
     this._description = props.description;
     this._deadline = props.deadline;
     this._status = props.status;
     this._level = props.level;
+
+    this.updatedAt = DateValueObject.now();
+  }
+
+  public updateStatus(newStatus: TaskStatus): void {
+    this._status = newStatus;
 
     this.updatedAt = DateValueObject.now();
   }
